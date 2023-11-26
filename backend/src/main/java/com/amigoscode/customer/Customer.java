@@ -17,6 +17,10 @@ import java.util.Objects;
                 @UniqueConstraint(
                         name = "customer_email_unique",
                         columnNames = "email"
+                ),
+                @UniqueConstraint(
+                        name = "profile_image_id_unique",
+                        columnNames = "profileImageId"
                 )
         }
 )
@@ -57,6 +61,10 @@ public class Customer implements UserDetails {
     )
     private String password;
 
+    @Column(unique = true)
+    private String profileImageId;
+
+
     public Customer() {
     }
 
@@ -72,6 +80,16 @@ public class Customer implements UserDetails {
         this.password = password;
         this.age = age;
         this.gender = gender;
+    }
+    public Customer(Integer id,
+                    String name,
+                    String email,
+                    String password,
+                    Integer age,
+                    Gender gender,
+                    String profileImageId) {
+        this(id,name,email,password,age,gender);
+        this.profileImageId = profileImageId;
     }
 
     public Customer(String name,
@@ -127,30 +145,6 @@ public class Customer implements UserDetails {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && gender == customer.gender;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, email, age, gender);
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", gender=" + gender +
-                '}';
-    }
-
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
@@ -158,6 +152,12 @@ public class Customer implements UserDetails {
     @Override
     public String getPassword() {
         return this.password;
+    }
+    public String getProfileImageId() {
+        return profileImageId;
+    }
+    public void setProfileImageId(String profileImageId) {
+        this.profileImageId = profileImageId;
     }
 
     @Override
@@ -183,5 +183,32 @@ public class Customer implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && gender == customer.gender && Objects.equals(password, customer.password) && Objects.equals(profileImageId, customer.profileImageId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, age, gender, password, profileImageId);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", password='" + password + '\'' +
+                ", profileImageId='" + profileImageId + '\'' +
+                '}';
     }
 }
