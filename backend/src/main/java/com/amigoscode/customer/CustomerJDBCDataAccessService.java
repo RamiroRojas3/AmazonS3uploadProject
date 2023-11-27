@@ -135,8 +135,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     }
 
     @Override
-    public void updateCustomerProfileImageId(String profileImageId,
-                                             Integer customerId) {
+    public void updateCustomerProfileImageId(String profileImageId, Integer customerId) {
         var sql = """
                 UPDATE customer
                 SET profile_image_id = ?

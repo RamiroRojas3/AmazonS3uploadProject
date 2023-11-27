@@ -61,10 +61,9 @@ public class Customer implements UserDetails {
     )
     private String password;
 
-    @Column(
-            unique = true
-    )
+    @Column(unique = true)
     private String profileImageId;
+
 
     public Customer() {
     }
@@ -82,7 +81,6 @@ public class Customer implements UserDetails {
         this.age = age;
         this.gender = gender;
     }
-
     public Customer(Integer id,
                     String name,
                     String email,
@@ -90,8 +88,8 @@ public class Customer implements UserDetails {
                     Integer age,
                     Gender gender,
                     String profileImageId) {
-       this(id, name, email, password, age, gender);
-       this.profileImageId = profileImageId;
+        this(id,name,email,password,age,gender);
+        this.profileImageId = profileImageId;
     }
 
     public Customer(String name,
@@ -146,14 +144,6 @@ public class Customer implements UserDetails {
         this.gender = gender;
     }
 
-    public String getProfileImageId() {
-        return profileImageId;
-    }
-
-    public void setProfileImageId(String profileImageId) {
-        this.profileImageId = profileImageId;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
@@ -162,6 +152,12 @@ public class Customer implements UserDetails {
     @Override
     public String getPassword() {
         return this.password;
+    }
+    public String getProfileImageId() {
+        return profileImageId;
+    }
+    public void setProfileImageId(String profileImageId) {
+        this.profileImageId = profileImageId;
     }
 
     @Override
@@ -188,6 +184,7 @@ public class Customer implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
     @Override
     public boolean equals(Object o) {
